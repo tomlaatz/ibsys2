@@ -2045,8 +2045,6 @@ function App() {
                 wsZeit.push({ arbeitsplatz, timeneed });
               }
             }
-            setWarteschlangeZeit(wsZeit);
-
 
             // Aufträge in Bearbeitung:
             const ordersinwork = xmlDoc.getElementsByTagName('ordersinwork')[0]; 
@@ -2060,6 +2058,16 @@ function App() {
               ordersinworkArray.push({arbeitsplatz: arbeitsplatz, article: article, amount: amount, timeneed: timeneed, auftragsNummer: order})
             })
             setInBearbeitung(ordersinworkArray);
+
+            ordersinworkArray.forEach((ibObj) => {
+              const existingObj = wsZeit.find((wsObj) => wsObj.arbeitsplatz === ibObj.arbeitsplatz);
+              if (existingObj) {
+                existingObj.timeneed += parseInt(ibObj.timeneed);
+              } else {
+                wsZeit.push({ arbeitsplatz: ibObj.arbeitsplatz, timeneed: parseInt(ibObj.timeneed) });
+              }
+            });
+            setWarteschlangeZeit(wsZeit);
 
             const auftragsNummern = ordersinworkArray.map(obj => obj.auftragsNummer);
 
@@ -2346,8 +2354,6 @@ function App() {
           break;
       }
     }
-
-
     
     // XML DOWNLOAD
     const handleDownload = () => {
@@ -2366,8 +2372,9 @@ function App() {
         selldirect.ele('item', { article: index+1, quantity: item[0], price: parseFloat(item[1]), penalty: parseFloat(item[2])});
       })
 
+      const newKaufDing = kaufteilEntscheidungen.filter((obj) => obj.bestellmenge !== 0);
       const orderlist = xml.ele('orderlist');
-      kaufteilEntscheidungen.forEach(item => {
+      newKaufDing.forEach(item => {
         orderlist.ele('order', { article: item.article, quantity: item.bestellmenge, modus: item.bestellart});
       })
 
