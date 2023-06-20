@@ -1,7 +1,9 @@
 import React from 'react';
-import { Table, Form, ButtonGroup, Button } from 'react-bootstrap';
+import { Table, OverlayTrigger, Tooltip, Form, ButtonGroup, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 function Kaufteildisposition({kaufteildisposition, kaufteilEntscheidungen, kaufteilEntscheidungenChange, kaufteilArtChange, setHeader, aktuellePeriode}) {  
     const { t } = useTranslation();
@@ -17,12 +19,33 @@ function Kaufteildisposition({kaufteildisposition, kaufteilEntscheidungen, kauft
               <th>{t('Verwendung P2')}</th>
               <th>{t('Verwendung P3')}</th>
               <th>{t('Diskontmenge')}</th>
-              <th>{t('Anfangsbestand in Periode')} {aktuellePeriode+1}</th>
-              <th>{t('Bruttobedarf Periode')} {aktuellePeriode+1}</th>
+              <th>   <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip-disabled">{t('Hierbei handelt es sich um den Endbestand der Vorperiode')}</Tooltip>}>
+                  <span className="d-inline-block">
+                          <FontAwesomeIcon icon={faInfoCircle}/>
+                  </span>
+                </OverlayTrigger>  <br></br>{t('Anfangsbestand in Periode')} {aktuellePeriode+1}
+            
+           
+              </th>
+
+              <th>
+              <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip-disabled">{t('Der Bedarf berechnet der verschiedenen Perioden berechnet sich aus einer Matrixmultiplikation des Produktionsprogamms und der Verwendung in den Endergebnissen')}</Tooltip>}>
+                  <span className="d-inline-block">
+                          <FontAwesomeIcon icon={faInfoCircle}/>
+                  </span>
+                </OverlayTrigger>
+                <br></br>
+                {t('Bruttobedarf Periode')} {aktuellePeriode+1}</th>
+             
+             
               <th>{t('Bruttobedarf Periode')} {aktuellePeriode+2}</th>
               <th>{t('Bruttobedarf Periode')} {aktuellePeriode+3}</th>
               <th>{t('Bruttobedarf Periode')} {aktuellePeriode+4}</th>
-              <th>{t('Bestand nach Periode')} {aktuellePeriode+1}</th>
+              <th> <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip-disabled">{t('Der Bestand berechnet sich durch den Anfangsbestand subtrahiert mit dem Bedarf der entsprechenden Perioden')}</Tooltip>}>
+                  <span className="d-inline-block">
+                          <FontAwesomeIcon icon={faInfoCircle}/>
+                  </span>
+                </OverlayTrigger>  <br></br>{t('Bestand nach Periode')} {aktuellePeriode+1}</th>
               <th>{t('Bestand nach Periode')} {aktuellePeriode+2}</th>
               <th>{t('Bestand nach Periode')} {aktuellePeriode+3}</th>
               <th>{t('Bestand nach Periode')} {aktuellePeriode+4}</th>

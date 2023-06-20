@@ -1,7 +1,9 @@
 import React from 'react';
-import { Table, ButtonGroup, Button } from 'react-bootstrap';
+import { Table, OverlayTrigger, Tooltip, ButtonGroup, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 function KapPla({kapPlaTabelle, kapBedarfNeu, ruestVorP, warteschlangeZeit, schichten, handleSchichtenChange, ueberstunden, handleUeberstundenChange, setHeader, ruestNeu, changeRuestNeu}) {  
     const { t } = useTranslation();
@@ -1104,7 +1106,11 @@ function KapPla({kapPlaTabelle, kapBedarfNeu, ruestVorP, warteschlangeZeit, schi
                 <td></td>
                 </tr> 
                 <tr>
-                <td style={centeredCellStyle} colSpan={4}>{t('Kapazitätsbedarf (neu)')}</td>
+                <td style={centeredCellStyle} colSpan={4}>{t('Kapazitätsbedarf (neu)')} <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip-disabled">{t('Der Kapazitätsbedarf berechnet sich aus der Summe der benötigten Arbeitsminuten je Produkt für einen Arbeitsplatz')}</Tooltip>}>
+                  <span className="d-inline-block">
+                          <FontAwesomeIcon icon={faInfoCircle}/>
+                  </span>
+                </OverlayTrigger></td>
                 <td colSpan={2}>{kapBedarfNeu[0]}</td>
                 <td colSpan={2}>{kapBedarfNeu[1]}</td>
                 <td colSpan={2}>{kapBedarfNeu[2]}</td>
@@ -1122,7 +1128,11 @@ function KapPla({kapPlaTabelle, kapBedarfNeu, ruestVorP, warteschlangeZeit, schi
                 <td colSpan={2}>{kapBedarfNeu[13]}</td>
                 </tr>       
                 <tr>
-                <td style={centeredCellStyle} colSpan={4}>{t('Rüstzeit (neu)')}</td>
+                <td style={centeredCellStyle} colSpan={4}>{t('Rüstzeit (neu)')} <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip-disabled">{t('Die Rüstzeit ist mit Erfahrungswerten vorausgefüllt werden kann aber entsprechend geändert werden')}</Tooltip>}>
+                  <span className="d-inline-block">
+                          <FontAwesomeIcon icon={faInfoCircle}/>
+                  </span>
+                </OverlayTrigger></td>
                 <td colSpan={2}><input
                       type="number"
                       className="form-control"
@@ -1252,7 +1262,11 @@ function KapPla({kapPlaTabelle, kapBedarfNeu, ruestVorP, warteschlangeZeit, schi
                     /></td>
                 </tr>         
                 <tr>
-                <td style={centeredCellStyle} colSpan={4}>{t('Kap.bed. (Rückstand Vorperiode)')}</td>
+                <td style={centeredCellStyle} colSpan={4}>{t('Kap.bed. (Rückstand Vorperiode)')} <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip-disabled">{t('Der Rückstand aus der Vorperiode vom Kapazitätsbedarf sind die aufaddierten Zeiten von Aufträgen in der Warteschlange oder in Bearbeitung die je Arbeitsplatz benötigt werden')}</Tooltip>}>
+                  <span className="d-inline-block">
+                          <FontAwesomeIcon icon={faInfoCircle}/>
+                  </span>
+                </OverlayTrigger></td>
                 <td colSpan={2}>{warteschlangeZeit.some(obj => obj.arbeitsplatz === '1') ? (
                 warteschlangeZeit.find(obj => obj.arbeitsplatz === '1').timeneed
                 ) : (
@@ -1340,7 +1354,11 @@ function KapPla({kapPlaTabelle, kapBedarfNeu, ruestVorP, warteschlangeZeit, schi
                 </td>
                 </tr>          
                 <tr>
-                <td style={centeredCellStyle} colSpan={4}>{t('Rüstzeit (Rückstand Vorperiode)')}</td>
+                <td style={centeredCellStyle} colSpan={4}>{t('Rüstzeit (Rückstand Vorperiode)')} <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip-disabled">{t('Der Rückstand aus der Vorperiode an Rüstzeit ermittelt sich aus der Summe der Rüstzeiten all den Aufträgen pro Arbeitsplatz die sich noch nicht gerade in Bearbeitung in diesem Arbeitsplatz befinden und daher erstmal gerüstet werden muss')}</Tooltip>}>
+                  <span className="d-inline-block">
+                          <FontAwesomeIcon icon={faInfoCircle}/>
+                  </span>
+                </OverlayTrigger></td>
                 <td colSpan={2}>{ruestVorP.some(obj => obj.arbeitsplatz === '1') ? (
                 ruestVorP.find(obj => obj.arbeitsplatz === '1').time
                 ) : (
@@ -1428,7 +1446,11 @@ function KapPla({kapPlaTabelle, kapBedarfNeu, ruestVorP, warteschlangeZeit, schi
                 </td>
                 </tr>       
                 <tr>
-                <td style={centeredCellStyle} colSpan={4}>{t('Gesamt-Kapazitätsbedarf')}</td>
+                <td style={centeredCellStyle} colSpan={4}>{t('Gesamt-Kapazitätsbedarf')} <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip-disabled">{t('Der Gesamt-Kapazitätsbedarf berechnet sich aus der Summe der 4 vorherigen Zeilen')}</Tooltip>}>
+                  <span className="d-inline-block">
+                          <FontAwesomeIcon icon={faInfoCircle}/>
+                  </span>
+                </OverlayTrigger></td>
                 <td colSpan={2}>
                 {(ruestVorP.some(obj => obj.arbeitsplatz === '1') ? (
                 parseInt(ruestVorP.find(obj => obj.arbeitsplatz === '1').time)
@@ -1614,7 +1636,11 @@ function KapPla({kapPlaTabelle, kapBedarfNeu, ruestVorP, warteschlangeZeit, schi
                 </td>
                 </tr>   
                 <tr>
-                <td style={centeredCellStyle} colSpan={4}>{t('Schichten')}</td>
+                <td style={centeredCellStyle} colSpan={4}>{t('Schichten')} <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip-disabled">{t('Die Schichten und Überstunden werden basierend auf dem Gesamtkapazitätsbedarf berechnet. Überstunden werden immer bevorzugt, falls mehr als 240 Minuten pro Tag an überstunden anfallen würden wird eine neue Schicht hinzugefügt.')}</Tooltip>}>
+                  <span className="d-inline-block">
+                          <FontAwesomeIcon icon={faInfoCircle}/>
+                  </span>
+                </OverlayTrigger></td>
                 <td colSpan={2}><input
                       type="number"
                       className="form-control"
@@ -1759,7 +1785,11 @@ function KapPla({kapPlaTabelle, kapBedarfNeu, ruestVorP, warteschlangeZeit, schi
                     /></td>
                 </tr>          
                 <tr>
-                <td style={centeredCellStyle} colSpan={4}>{t('Überstunden')}</td>
+                <td style={centeredCellStyle} colSpan={4}>{t('Überstunden')} <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip-disabled">{t('Die Schichten und Überstunden werden basierend auf dem Gesamtkapazitätsbedarf berechnet. Überstunden werden immer bevorzugt, falls mehr als 240 Minuten pro Tag an überstunden anfallen würden wird eine neue Schicht hinzugefügt.')}</Tooltip>}>
+                  <span className="d-inline-block">
+                          <FontAwesomeIcon icon={faInfoCircle}/>
+                  </span>
+                </OverlayTrigger></td>
                 <td colSpan={2}><input
                       type="number"
                       className="form-control"
